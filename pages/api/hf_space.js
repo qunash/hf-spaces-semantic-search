@@ -33,7 +33,7 @@ const get_space_info = async (space_id) => {
 
         const result = { space_id, author, title, emoji, lastModified, colorFrom, colorTo, likes, sdk, runtime_stage, current_hardware }
 
-        console.debug("API response: ", result)
+        // console.debug("API response: ", result)
 
         return result
 

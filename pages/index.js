@@ -24,6 +24,10 @@ export default function Home() {
       });
       const spaceData = await Promise.all(spacePromises);
       setSpaceInfo(spaceData);
+      document.querySelector('.search-bar').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
 
     if (searchResults.length > 0) {
@@ -51,7 +55,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main className={`flex min-h-screen flex-col items-center justify-between p-8 md:p-24 ${inter.className}`}>
+    <main className={`flex min-h-screen flex-col items-center p-8 md:px-24 my-10 ${inter.className}`}>
+      <h1 className="text-4xl md:text-6xl font-bold text-center mb-12">🤗 Hugging Face Spaces</h1>
       <SearchBar onSearch={onSearch} />
       {spaceInfo !== null && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mt-8">

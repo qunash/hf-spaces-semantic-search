@@ -33,19 +33,19 @@ const Card = ({
 
   let runtimeStageIcon = null;
   if (runtimeStage === 'STOPPED') {
-    runtimeStageIcon = <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+    runtimeStageIcon = <svg className="mr-0.5" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
       <rect x="11" y="9" width="2" height="14" fill="currentColor" />
       <rect x="19" y="9" width="2" height="14" fill="currentColor" />
     </svg>;
   } else if (runtimeStage.includes('ERROR')) {
-    runtimeStageIcon = <svg class="mr-0.5" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M24 9.4L22.6 8L16 14.6L9.4 8L8 9.4l6.6 6.6L8 22.6L9.4 24l6.6-6.6l6.6 6.6l1.4-1.4l-6.6-6.6L24 9.4z" fill="currentColor"></path></svg>;
+    runtimeStageIcon = <svg className="mr-0.5" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1.1em" height="1.1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M24 9.4L22.6 8L16 14.6L9.4 8L8 9.4l6.6 6.6L8 22.6L9.4 24l6.6-6.6l6.6 6.6l1.4-1.4l-6.6-6.6L24 9.4z" fill="currentColor"></path></svg>;
   }
 
   return (
     <div className="flex flex-col">
       <a href={spaceUrl} target="_blank" rel="noopener noreferrer">
         <div className="text-sm truncate px-2 py-1 w-full font-bold text-clip">
-          {emoji}{title}
+          {emoji} {title}
         </div>
       </a>
 
@@ -56,15 +56,19 @@ const Card = ({
         >
           <div className="flex justify-between items-center w-full">
             <div className="right-16 flex flex-wrap content-start gap-1.5 overflow-hidden top-3 left-3 text-xs">
-              <div className={`inline-flex select-none items-center overflow-hidden font-mono  rounded bg-white/10 px-1 py-0 leading-tight text-white opacity-80`}>
+              <div className={`inline-flex select-none items-center overflow-hidden font-mono rounded bg-white/10 px-1 py-0 leading-tight text-white opacity-80`}>
                 {runtimeStageIcon}
                 <strong>{runtimeStage}</strong>
-                <span className="mx-1">on</span>
-                <strong>{currentHardware}</strong>
+                {runtimeStage === "RUNNING" && (
+                  <>
+                    <span className="mx-1">on</span>
+                    <strong>{currentHardware}</strong>
+                  </>
+                )}
               </div>
               <div className="inline-flex select-none items-center overflow-hidden font-mono  rounded bg-white/10 px-1 py-0 leading-tight text-white opacity-80">
                 <span>{lastModified}</span>
-              </div>              
+              </div>
             </div>
             <div className="flex items-center">
               <svg className="mr-1.5 text-white" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32" fill="currentColor">
