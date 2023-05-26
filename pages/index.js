@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import SearchBar from '@/components/searchBar';
 import Card from '@/components/card';
+import BackgroundEmojiGrid from '@/components/backgroundEmojiGrid';
 import { predict } from '@/pages/api/api_hf';
 import { get_space_info } from '@/pages/api/hf_space';
 import { useState, useEffect } from 'react';
@@ -42,7 +43,7 @@ export default function Home() {
       setSearchResults([]);
       return;
     }
-    const results = await predict(query, 90);
+    const results = await predict(query, 10);
     setSearchResults(results);
   }
 
@@ -55,7 +56,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main className={`flex min-h-screen flex-col items-center p-8 md:px-24 my-10 ${inter.className}`}>
+    <main className={`flex min-h-screen flex-col items-center p-8 md:px-24 py-20 bg-gray-950 ${inter.className}`}>
+      {/* <BackgroundEmojiGrid /> */}
       <h1 className="text-4xl md:text-6xl font-bold text-center mb-12">🤗 Hugging Face Spaces</h1>
       <SearchBar onSearch={onSearch} />
       {spaceInfo !== null && (
