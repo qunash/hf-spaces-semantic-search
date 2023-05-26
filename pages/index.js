@@ -84,6 +84,8 @@ export default function Home() {
       <footer className="text-center text-gray-500 text-sm mt-8 bottom-0 w-full p-4">
       Created by Anzor Qunash
       <br />
+      <a href="https://huggingface.co/datasets/anzorq/hf-spaces-descriptions-embeddings" target="_blank" rel="noopener noreferrer">Dataset</a>
+      <span className="mx-2">•</span>
       <a href="https://github.com/qunash" target="_blank" rel="noopener noreferrer">GitHub</a>
       <span className="mx-2">•</span>
       <a href="https://twitter.com/hahahahohohe" target="_blank" rel="noopener noreferrer">Twitter</a>
