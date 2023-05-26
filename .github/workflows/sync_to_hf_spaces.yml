@@ -6,7 +6,7 @@ on:
 
 env:
   HF_USERNAME: anzorq
-  HF_SPACE_NAME: test
+  HF_SPACE_NAME: hf-spaces-semantic-search
 
 jobs:
   sync-to-space:
