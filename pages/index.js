@@ -56,7 +56,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className={`flex min-h-screen flex-col items-center p-8 md:px-24 py-20 bg-gray-950 ${inter.className}`}>
+    <main className={`flex min-h-screen flex-col items-center p-8 md:px-24 pt-20 bg-gray-950 ${inter.className} justify-between`}>
       {/* <BackgroundEmojiGrid /> */}
       <h1 className="text-4xl md:text-6xl font-bold text-center mb-12">🤗 Hugging Face Spaces</h1>
       <SearchBar onSearch={onSearch} />
@@ -81,6 +81,15 @@ export default function Home() {
           ))}
         </div>
       )}
+      <footer className="text-center text-gray-500 text-sm mt-8 bottom-0 w-full p-4">
+      Created by Anzor Qunash
+      <br />
+      <a href="https://github.com/qunash" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <span className="mx-2">•</span>
+      <a href="https://twitter.com/hahahahohohe" target="_blank" rel="noopener noreferrer">Twitter</a>
+      <span className="mx-2">•</span>
+      <a href="https://www.buymeacoffee.com/anzorq" target="_blank" rel="noopener noreferrer">Buy me a coffee</a>
+      </footer>
     </main>
   );
 }
