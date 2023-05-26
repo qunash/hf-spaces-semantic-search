@@ -10,6 +10,7 @@ const SearchBar = ({ onSearch }) => {
     "Generate music",
     "Remove background from images",
     "Translate text",
+    "Chat with a PDF file",
     "Generate anime images",
     "Recognize objects in images",
     "Perform sentiment analysis",
@@ -25,6 +26,7 @@ const SearchBar = ({ onSearch }) => {
     "Generate video from text and audio",
     "Help me organize a trip",
     "Write a children's story",
+    "Chat with a cat",
   ];
 
   useEffect(() => {
@@ -39,7 +41,7 @@ const SearchBar = ({ onSearch }) => {
     if (!showInitialPlaceholder) {
       let typingInterval;
       if (placeholder.length < placeholders[placeholderIndex].length) {
-        const typingSpeed = Math.floor(Math.random() * 101) + 100;
+        const typingSpeed = Math.floor(Math.random() * 50) + 100;
         typingInterval = setInterval(() => {
           setPlaceholder(prevPlaceholder => prevPlaceholder + placeholders[placeholderIndex][placeholder.length]);
         }, typingSpeed);

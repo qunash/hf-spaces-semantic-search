@@ -51,7 +51,9 @@ const Card = ({
 
       <a href={spaceUrl} target="_blank" rel="noopener noreferrer">
         <div
-          className={`relative z-0 mx-auto flex flex-col items-center justify-center p-4 filter hover:brightness-110 overflow-hidden h-52 rounded-lg`}
+          // className={`relative z-0 mx-auto flex flex-col items-center justify-center p-4 filter hover:brightness-110 overflow-hidden h-52 rounded-lg`}
+          // to resize to 100% on hover we can use the following:
+          className={`relative z-0 mx-auto flex flex-col items-center justify-center p-4 filter hover:brightness-110 overflow-hidden h-52 rounded-lg transition-all duration-50 ease-in-out hover:scale-[1.008]`}
           style={gradientStyle}
         >
           <div className="flex justify-between items-center w-full">

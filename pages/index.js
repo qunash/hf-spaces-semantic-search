@@ -43,7 +43,7 @@ export default function Home() {
       setSearchResults([]);
       return;
     }
-    const results = await predict(query, 10);
+    const results = await predict(query, 12);
     setSearchResults(results);
   }
 
