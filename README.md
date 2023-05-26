@@ -1,6 +1,6 @@
 ---
 title: 🤗 Spaces Semantic Search
-emoji: 🐳🤗
+emoji: 🌌🔍
 colorFrom: blue
 colorTo: yellow
 sdk: docker
