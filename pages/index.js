@@ -13,8 +13,15 @@ export default function Home() {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [sortBy, setSortBy] = useState('relevance');
+  const [onlyRunning, setOnlyRunning] = useState(false);
 
   useEffect(() => {
+    if (searchResults.length > 0) {
+      fetchSpaceInfo(searchResults);
+    } else {
+      setSpaceInfo(null);
+    }
+
     async function fetchSpaceInfo(results) {
       setIsLoading(true);
       const spaceData = await Promise.all(
@@ -30,84 +37,100 @@ export default function Home() {
         block: 'start',
       });
     }
-
-    if (searchResults.length > 0) {
-      fetchSpaceInfo(searchResults);
-    } else {
-      setSpaceInfo(null);
-    }
   }, [searchResults]);
 
   useEffect(() => {
     if (spaceInfo) {
-      setSortedSpaceInfo(sortResults(spaceInfo, sortBy));
+      setSortedSpaceInfo(filterResults(sortResults(spaceInfo, sortBy)));
     }
-  }, [spaceInfo, sortBy]);
-
-  async function onSearch(query) {
-    setIsLoading(true); // Show loading animation when searching
-    setSortBy('relevance'); // Reset sorting to Relevance on new search
-    setSearchResults(query ? await predict(query, 12) : []);
-  }
+  }, [spaceInfo, sortBy, onlyRunning]);
 
   useEffect(() => {
     document.querySelector('.search-bar')?.focus();
   }, []);
 
+  async function onSearch(query) {
+    setIsLoading(true);
+    setSortBy('relevance');
+    setSearchResults(query ? await predict(query, 24) : []);
+  }
+
   function sortResults(results, sortBy) {
     return sortBy === 'likes' ? [...results].sort((a, b) => b.likes - a.likes) : results;
   }
+
+  function filterResults(results) {
+    return onlyRunning ? results.filter((space) => space.runtime_stage === 'RUNNING') : results;
+  }
+
+  function toggleOnlyRunning() {
+    setOnlyRunning(!onlyRunning);
+  }
+
+  const renderSortButtons = () => (
+    <>
+      {['relevance', 'likes'].map((option) => (
+        <div>
+          <button
+            key={option}
+            className={`px-4 py-1 rounded-full mr-2 ${sortBy === option ? 'bg-white text-gray-900' : 'bg-gray-900 text-white'}`}
+            onClick={() => setSortBy(option)}
+          >
+            {option.charAt(0).toUpperCase() + option.slice(1)}
+          </button>
+        </div>
+      ))}
+    </>
+  );
+
+  const renderCards = () =>
+    sortedSpaceInfo.map(
+      (space, index) =>
+        space && (
+          <Card
+            key={index}
+            {...space}
+            space_id={space.space_id}
+            author={space.author}
+            title={space.title}
+            emoji={space.emoji}
+            lastModified={space.lastModified}
+            colorFrom={space.colorFrom}
+            colorTo={space.colorTo}
+            sdk={space.sdk}
+            runtimeStage={space.runtime_stage}
+            currentHardware={space.current_hardware}
+          />
+        )
+    );
 
   return (
     <main className={`flex min-h-screen flex-col items-center p-8 md:px-24 pt-20 bg-gray-950 ${inter.className} justify-between`}>
       <h1 className="text-4xl md:text-6xl font-bold text-center mb-12 text-white">🤗 Hugging Face Spaces</h1>
       <SearchBar onSearch={onSearch} />
-      { isLoading ? (
-              <div className="col-span-full flex justify-center items-center">
-                <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white"></div>
-              </div>
-            ) : (
-      sortedSpaceInfo && (
-        <>
-          {!isLoading && (
+      {isLoading ? (
+        <div className="col-span-full flex justify-center items-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white"></div>
+        </div>
+      ) : (
+        sortedSpaceInfo && (
+          <>
             <div className="flex justify-center mt-4 items-baseline">
+              <button
+                className={`px-4 mx-4 py-1 rounded-full ${onlyRunning ? 'bg-white text-gray-900' : 'bg-gray-900 text-white'}`}
+                onClick={toggleOnlyRunning}
+              >
+                Only running
+              </button>
               <span className="text-white mr-2">Sort by:</span>
-              {['relevance', 'likes'].map((option) => (
-                <button
-                  key={option}
-                  className={`px-4 py-1 rounded-full mr-2 ${sortBy === option ? 'bg-white text-gray-900' : 'bg-gray-900 text-white'}`}
-                  onClick={() => setSortBy(option)}
-                >
-                  {option.charAt(0).toUpperCase() + option.slice(1)}
-                </button>
-              ))}
+              {renderSortButtons()}
             </div>
-          )}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mt-8">
-            {
-              sortedSpaceInfo.map(
-                (space, index) =>
-                  space && (
-                    <Card
-                      key={index}
-                      {...space}
-                      space_id={space.space_id}
-                      author={space.author}
-                      title={space.title}
-                      emoji={space.emoji}
-                      lastModified={space.lastModified}
-                      colorFrom={space.colorFrom}
-                      colorTo={space.colorTo}
-                      sdk={space.sdk}
-                      runtimeStage={space.runtime_stage}
-                      currentHardware={space.current_hardware}
-                    />
-                  )
-              )
-            }
-          </div>
-        </>
-      ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full mt-8">
+              {renderCards()}
+            </div>
+          </>
+        )
+      )}
       <footer className="text-center text-gray-500 text-sm mt-8 bottom-0 w-full p-4">
         Created by Anzor Qunash
         <br />
