@@ -43,11 +43,11 @@ const Card = ({
 
   return (
     <div className="flex flex-col">
-      <a href={spaceUrl} target="_blank" rel="noopener noreferrer">
+      {/* <a href={spaceUrl} target="_blank" rel="noopener noreferrer">
         <div className="text-sm truncate px-2 py-1 w-full font-bold text-clip">
           {emoji} {title}
         </div>
-      </a>
+      </a> */}
 
       <a href={spaceUrl} target="_blank" rel="noopener noreferrer">
         <div
@@ -79,8 +79,11 @@ const Card = ({
               <span className="text-white text-sm">{likes}</span>
             </div>
           </div>
-          <div className="flex items-center h-full">
-            <p className="text-white text-base text-center font-semibold text-ellipsis overflow-hidden">
+          <div className="flex items-center h-full flex-col gap-2 p-4 w-full">
+            <div className="text-white text-center text-xl truncate px-2 py-1 w-full font-bold text-clip overflow-hidden">
+              {emoji} {title}
+            </div>
+            <p className="text-white text-base text-center font-medium text-ellipsis overflow-hidden">
               {description}
             </p>
           </div>
