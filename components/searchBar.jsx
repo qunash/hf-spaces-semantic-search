@@ -38,7 +38,7 @@ const SearchBar = ({ onSearch }) => {
   }, []);
 
   useEffect(() => {
-    if (!showInitialPlaceholder) {
+    if (!showInitialPlaceholder && query === "") {
       let typingInterval;
       if (placeholder.length < placeholders[placeholderIndex].length) {
         const typingSpeed = Math.floor(Math.random() * 50) + 100;
@@ -48,10 +48,10 @@ const SearchBar = ({ onSearch }) => {
       }
       return () => clearInterval(typingInterval);
     }
-  }, [placeholder, placeholderIndex, showInitialPlaceholder]);
+  }, [placeholder, placeholderIndex, showInitialPlaceholder, query]);
 
   useEffect(() => {
-    if (!showInitialPlaceholder) {
+    if (!showInitialPlaceholder && query === "") {
       const indexInterval = setInterval(() => {
         if (placeholder === placeholders[placeholderIndex]) {
           setPlaceholderIndex(Math.floor(Math.random() * placeholders.length));
@@ -61,11 +61,19 @@ const SearchBar = ({ onSearch }) => {
 
       return () => clearInterval(indexInterval);
     }
-  }, [placeholder, placeholderIndex, showInitialPlaceholder]);
+  }, [placeholder, placeholderIndex, showInitialPlaceholder, query]);
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       onSearch(query);
+    }
+  };
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+    if (e.target.value === "") {
+      setPlaceholder("");
+      setPlaceholderIndex(Math.floor(Math.random() * placeholders.length));
     }
   };
 
@@ -76,7 +84,7 @@ const SearchBar = ({ onSearch }) => {
         placeholder={showInitialPlaceholder ? initialPlaceholder : placeholder}
         className="search-bar w-full h-full px-4 py-2 text-gray-200 bg-gray-800 border border-gray-700 rounded-xl shadow-sm appearance-none focus:outline-none focus:ring-2"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
     </div>
