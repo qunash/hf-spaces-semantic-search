@@ -1,4 +1,3 @@
-
 const get_space_info = async (space_id) => {
     try {
         const response = await fetch(`https://huggingface.co/api/spaces/${space_id}`)
@@ -14,10 +13,10 @@ const get_space_info = async (space_id) => {
         const lastModified = dayjs(json.lastModified).fromNow()
 
         const author = json.author
-        const title = json.cardData.title || 'Untitled'
-        const emoji = json.cardData.emoji
-        let colorFrom = json.cardData.colorFrom || 'pink'
-        let colorTo = json.cardData.colorTo || 'purple'
+        const title = json.cardData?.title || json.id.split('/')[1].replace(/-/g, ' ') || 'Untitled'
+        const emoji = json.cardData?.emoji || '🤗'
+        let colorFrom = json.cardData?.colorFrom || 'pink'
+        let colorTo = json.cardData?.colorTo || 'purple'
         const likes = json.likes
         const sdk = json.sdk
         const runtime_stage = json.runtime.stage
